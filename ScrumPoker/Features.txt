@@ -1,0 +1,20 @@
+﻿People:
+    Watcher
+    Moderator
+    Player
+
+
+High Low
+Stats
+integration with stories
+integration with 3rd party auth
+
+
+Admin:
+Configure
+    Card Values
+    No player reveal
+    No player reset
+
+cleanup code remove extra dependencies
+cleanup code so only required components

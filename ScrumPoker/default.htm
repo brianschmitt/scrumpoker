@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrum Poker</title>
+    <link href="/Content/site.css" rel="stylesheet" />
+    <meta name="description" content="Scrum Poker" />
+</head>
+<body ng-app="scrumpoker" ng-controller="gameController">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand">Scrum Poker {{roomName}}</span>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="" ng-click="reveal()">Reveal</a></li>
+                <li><a href="" ng-click="reset()">Reset</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <section ng-hide="gameActive">
+            <h2>Welcome</h2>
+            <div id="loginActions">
+                <form>
+                    <input type="text" placeholder="Nickname?" ng-model="nickname" class="input-lg" ng-keyup="$event.keyCode == 13 ? joinGame() : null" autofocus="autofocus" maxlength="10" />
+                    <input type="text" placeholder="Roomname?" ng-model="roomName" class="input-lg" ng-keyup="$event.keyCode == 13 ? joinGame() : null" maxlength="10" />
+                    <input type="button" value="Play" class="btn btn-default btn-lg" ng-click="joinGame()" />
+                    <input type="button" value="Watch" class="btn btn-primary btn-lg" ng-click="joinGame('Observer')" />
+                    <h4 ng-cloak class="text-danger">{{ errorLogin }}</h4>
+                </form>
+            </div>
+        </section>
+
+        <section ng-show="gameActive" ng-cloak>
+            <section id="voteResult">
+                <div ng-attr-class="{{revealed && 'card cardFront' || 'card cardBack' }}" ng-repeat="player in players">
+                    <p class="resultcard">{{ player.vote }}</p>
+                    <h4>{{ player.nickName }}</h4>
+                </div>
+            </section>
+
+            <section id="playerHand" ng-show="isPlayer">
+                <h2>{{ nickname }}</h2>
+                <div ng-repeat="card in cards" ng-click="castVote(card.value)" class="card cardFront" ng-class="{ 'selected-card': card.value == selectedVote }">
+                    <p>{{ card.value }}</p>
+                </div>
+            </section>
+        </section>
+    </div>
+    <footer>
+        <span class="title">Scrum Poker Planning</span>
+        <span class="timer">{{counter|formatTimer}}</span>
+    </footer>
+    <script src="/Scripts/angular.min.js"></script>
+    <script src="/Scripts/scrumpoker.js"></script>
+    <script src="/Scripts/jquery-1.11.0.min.js"></script>
+    <script src="/Scripts/bootstrap-clean.js"></script>
+    <script src="/Scripts/jquery.signalR-2.0.2.min.js"></script>
+    <script src="/signalr/hubs"></script>
+
+</body>
+</html>
