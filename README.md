@@ -1,0 +1,4 @@
+scrumpoker
+==========
+
+Scrum Poker Planning
